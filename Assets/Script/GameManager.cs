@@ -42,6 +42,15 @@ public class GameManager : MonoBehaviour{
     [SerializeField]
     GameObject[] tapArea;
 
+    [SerializeField]
+    GameObject Miss;
+
+    [SerializeField]
+    GameObject Good;
+
+    [SerializeField]
+    GameObject Perfect;
+
     async void Start(){
         scoreText.text = $"Score:{score}";
         comboText.text = $"Combo:{combo}";
@@ -104,6 +113,15 @@ public class GameManager : MonoBehaviour{
                     Tap(hit);
                 }
             }
+
+            if(audioSource.time >= audioClip.length){
+                playing = false;
+                ScoreManager.now_score = score;
+                if(ScoreManager.max_combo < combo){
+                    ScoreManager.max_combo = combo;
+                }
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Result");
+            }
         }
     }
 
@@ -111,10 +129,23 @@ public class GameManager : MonoBehaviour{
         if(hit.collider.gameObject.CompareTag("Note")){
             Destroy(hit.collider.gameObject);
             AddScore(hit.distance);
+            ShowParticle(hit.distance,hit.collider.gameObject.transform.position);
             return true;
         }
 
         return false;
+    }
+
+    public void ShowParticle(float diff,Vector3 position){
+        if(diff>0.5f){
+            Instantiate(Miss,position,Quaternion.Euler(-90, 0, 0));
+        }
+        else if(diff>0.1f){
+            Instantiate(Good,position,Quaternion.Euler(-90, 0, 0));
+        }
+        else{
+            Instantiate(Perfect,position,Quaternion.Euler(-90, 0, 0));
+        }
     }
 
     public void AddScore(float diff){
@@ -124,11 +155,11 @@ public class GameManager : MonoBehaviour{
             combo =0;
         }
         else{
-            if(diff < 0.2f){
+            if(diff < 0.5f){
                 base_score = 3;
                 Debug.Log($"Good! diff:{diff}");
             }
-            else if(diff > 0.1f){
+            else if(diff > 0.2f){
                 base_score = 6;
                 Debug.Log($"diff:{diff}");
             }
@@ -142,5 +173,9 @@ public class GameManager : MonoBehaviour{
         }
         scoreText.text = $"Score:{score}";
         comboText.text = $"Combo:{combo}";
+        ScoreManager.now_score = score;
+        if(ScoreManager.max_combo < combo){
+            ScoreManager.max_combo = combo;
+        }
     }
 }
