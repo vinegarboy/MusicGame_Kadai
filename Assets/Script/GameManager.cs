@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 using TMPro;
 using System.Data;
+using Cysharp.Threading.Tasks;
 
 public class Note{
     public float time;
@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour{
         notes = new List<Note>();
         MusicAnalyze musicAnalyze = new MusicAnalyze(audioClip,2048,512);
 
-        await Task.Run(()=>musicAnalyze.Analyze());
-        notes = await Task.Run(()=>musicAnalyze.GetNotes());
+        await UniTask.RunOnThreadPool(()=>musicAnalyze.Analyze());
+        notes = await UniTask.RunOnThreadPool(()=>musicAnalyze.GetNotes());
 
         waitPanel.SetActive(false);
         foreach(Note note in notes){
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour{
         transform.position = Vector3.zero;
         audioSource.clip = audioClip;
         playing = true;
-        await Task.Delay((int)(silentTime * 1000));
+        await UniTask.Delay((int)(silentTime * 1000));
         audioSource.Play();
     }
 
