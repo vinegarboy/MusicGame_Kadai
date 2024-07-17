@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour{
         notes = new List<Note>();
         MusicAnalyze musicAnalyze = new MusicAnalyze(audioClip,2048,512);
 
-        await UniTask.RunOnThreadPool(()=>musicAnalyze.Analyze());
-        notes = await UniTask.RunOnThreadPool(()=>musicAnalyze.GetNotes());
+        musicAnalyze.Analyze();
+        notes = musicAnalyze.GetNotes();
 
         waitPanel.SetActive(false);
         foreach(Note note in notes){
@@ -79,38 +79,104 @@ public class GameManager : MonoBehaviour{
             transform.Translate(0,-Time.deltaTime*noteSpeed ,0);
             if(Input.GetKeyDown(KeyCode.S)){
                 RaycastHit hit;
+                RaycastHit back_hit;
                 if (Physics.Raycast(tapArea[0].transform.position,new Vector3(0,1,0),out hit ,8.5f)){
-                    Tap(hit);
+                    if(Physics.Raycast(tapArea[0].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                        if(back_hit.distance > hit.distance){
+                            Tap(hit);
+                        }else{
+                            Tap(back_hit);
+                        }
+                    }else{
+                        Tap(hit);
+                    }
+                }else if(Physics.Raycast(tapArea[0].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                    Tap(back_hit);
                 }
             }
             if(Input.GetKeyDown(KeyCode.D)){
                 RaycastHit hit;
+                RaycastHit back_hit;
                 if (Physics.Raycast(tapArea[1].transform.position,new Vector3(0,1,0),out hit ,8.5f)){
-                    Tap(hit);
+                    if(Physics.Raycast(tapArea[1].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                        if(back_hit.distance > hit.distance){
+                            Tap(hit);
+                        }else{
+                            Tap(back_hit);
+                        }
+                    }else{
+                        Tap(hit);
+                    }
+                }else if(Physics.Raycast(tapArea[1].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                    Tap(back_hit);
                 }
             }
             if(Input.GetKeyDown(KeyCode.F)){
                 RaycastHit hit;
+                RaycastHit back_hit;
                 if (Physics.Raycast(tapArea[2].transform.position,new Vector3(0,1,0),out hit ,8.5f)){
-                    Tap(hit);
+                    if(Physics.Raycast(tapArea[2].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                        if(back_hit.distance > hit.distance){
+                            Tap(hit);
+                        }else{
+                            Tap(back_hit);
+                        }
+                    }else{
+                        Tap(hit);
+                    }
+                }else if(Physics.Raycast(tapArea[2].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                    Tap(back_hit);
                 }
             }
             if(Input.GetKeyDown(KeyCode.J)){
                 RaycastHit hit;
+                RaycastHit back_hit;
                 if (Physics.Raycast(tapArea[3].transform.position,new Vector3(0,1,0),out hit ,8.5f)){
-                    Tap(hit);
+                    if(Physics.Raycast(tapArea[3].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                        if(back_hit.distance > hit.distance){
+                            Tap(hit);
+                        }else{
+                            Tap(back_hit);
+                        }
+                    }else{
+                        Tap(hit);
+                    }
+                }else if(Physics.Raycast(tapArea[3].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                    Tap(back_hit);
                 }
             }
             if(Input.GetKeyDown(KeyCode.K)){
                 RaycastHit hit;
+                RaycastHit back_hit;
                 if (Physics.Raycast(tapArea[4].transform.position,new Vector3(0,1,0),out hit ,8.5f)){
-                    Tap(hit);
+                    if(Physics.Raycast(tapArea[4].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                        if(back_hit.distance > hit.distance){
+                            Tap(hit);
+                        }else{
+                            Tap(back_hit);
+                        }
+                    }else{
+                        Tap(hit);
+                    }
+                }else if(Physics.Raycast(tapArea[4].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                    Tap(back_hit);
                 }
             }
             if(Input.GetKeyDown(KeyCode.L)){
                 RaycastHit hit;
+                RaycastHit back_hit;
                 if (Physics.Raycast(tapArea[5].transform.position,new Vector3(0,1,0),out hit ,8.5f)){
-                    Tap(hit);
+                    if(Physics.Raycast(tapArea[5].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                        if(back_hit.distance > hit.distance){
+                            Tap(hit);
+                        }else{
+                            Tap(back_hit);
+                        }
+                    }else{
+                        Tap(hit);
+                    }
+                }else if(Physics.Raycast(tapArea[5].transform.position,new Vector3(0,-1,0),out back_hit ,5.0f)){
+                    Tap(back_hit);
                 }
             }
 

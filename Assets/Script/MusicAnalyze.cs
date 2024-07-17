@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MusicAnalyze : MonoBehaviour{
+public class MusicAnalyze{
     private float sdb_max = 0;
     float[,] sdb;
     private AudioClip audio;
